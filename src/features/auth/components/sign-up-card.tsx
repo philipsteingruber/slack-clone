@@ -22,6 +22,7 @@ interface SignUpCardProps {
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
   const { signIn } = useAuthActions();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,7 +38,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
     }
 
     setIsPending(true);
-    signIn("password", { email, password, flow: "signUp" })
+    signIn("password", { name, email, password, flow: "signUp" })
       .catch(() => {
         setError("Invalid username/password chosen.");
       })
@@ -69,6 +70,16 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
       )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form action="" className="space-y-2 5" onSubmit={onPasswordSignUp}>
+          <Input
+            disabled={isPending}
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            placeholder="Full Name"
+            type="text"
+            required
+          />
           <Input
             disabled={isPending}
             value={email}
