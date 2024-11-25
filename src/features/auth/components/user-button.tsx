@@ -8,7 +8,7 @@ import {
 import { useAuthActions } from "@convex-dev/auth/react";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Loader, LogOut } from "lucide-react";
-import { useCurrentUser } from "../hooks/use-current-user";
+import { useCurrentUser } from "../api/use-current-user";
 
 export default function UserButton() {
   const { signOut } = useAuthActions();
