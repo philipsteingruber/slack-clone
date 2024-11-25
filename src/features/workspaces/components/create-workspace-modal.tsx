@@ -6,13 +6,31 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useCreateWorkspace } from "../api/use-create-workspace";
 import { useCreateWorkspaceModal } from "../store/use-create-workspace-modal";
 
 export const CreateWorkspaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
 
+  const { mutate } = useCreateWorkspace();
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    mutate(
+      {
+        name: "Workspace 1",
+      },
+      {
+        onSuccess: (data) => {
+          router.push(`/workspaces/${data}`);
+        },
+        onError: () => {},
+        onSettled: () => {},
+      }
+    );
   };
 
   return (
@@ -21,7 +39,7 @@ export const CreateWorkspaceModal = () => {
         <DialogHeader>
           <DialogTitle>Add a workspace</DialogTitle>
         </DialogHeader>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <Input
             value=""
             disabled={false}
